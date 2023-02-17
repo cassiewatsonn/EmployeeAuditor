@@ -69,8 +69,101 @@ function firstQuestion(){
   })
 
 }
+//TODO: Use above ^ functions for next questions below 
+
+function viewDept(){
+
+}
+
+function viewRoles(){
+
+}
+
+function viewEmployees(){
+
+}
+
+function addDept(){
+
+  inquirer
+    .prompt({
+      type: 'list',
+      message: 'What is the name of the department?',
+      name: 'department-name',
+      choices: ['Development', 'Finance', 'Sales', 'Service']
+    }).then 
 
 
+}
+
+function addRole(){
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        message: 'What is the name of the role?',
+        name: 'role',
+      },
+      {
+        type: 'input',
+        message: 'What is the salary of the role?',
+        name: 'salary',
+      },
+      {
+        type: 'list',
+        message: 'What department does this role belong to?',
+        name: 'department-role',
+        choices: ['Development', 'Finance', 'Sales', 'Service']
+      },
+    ]).then 
+
+}
+
+function addEmployee(){
+  
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        message: 'What is the employees first name?',
+        name: 'firstname',
+      },
+      {
+        type: 'input',
+        message: 'What is the employees last name?',
+        name: 'lastname',
+      },
+      {
+        type: 'list',
+        message: 'What is the employees role?',
+        name: 'employee-role',
+        choices: ['Sales Person', 'Senior Developer', 'Junior Developer', 'Accountant', 'Service Person']
+      },
+      {
+        type: 'list',
+        message: 'Who is the employees manager?',
+        name: 'manager',
+        choices: ['', '', '', '', '']
+      },
+    ])
+}
+
+function updateRole(){
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "Which employee are you updating?",
+        name: "employ-update"
+      },
+    
+      {
+        type: "input",
+        message: "What do you want to update the role to?",
+        name: "roleUpdate"
+      }
+    ])
+}
 
 app.use((req, res) => {
     res.status(404).end();
