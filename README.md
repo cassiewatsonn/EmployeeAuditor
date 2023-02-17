@@ -18,7 +18,7 @@ This EmployeeAuditor is a content management system(CMS) that allows non-develop
 
 ## Installation 
 
-To install this package, you will gather the files from the EmployeeAuditor GitHub Respoitory by Cassandra Watson (https://github.com/cassiewatsonn/EmployeeAuditor). Once you have all of the files, navigate to your terminal and input 'npm install'. This will install the inquirer,  MySQL2 and console.table packages from the package.json file. 
+To install this package, you will gather the files from the [EmployeeAuditor GitHub Respoitory by Cassandra Watson](https://github.com/cassiewatsonn/EmployeeAuditor). Once you have all of the files, navigate to your terminal and input 'npm install'. This will install the inquirer,  MySQL2 and console.table packages from the package.json file. 
 
 ## Usage 
 
