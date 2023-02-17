@@ -1,11 +1,12 @@
 // TODO: Create an array of questions for user input
+/// OR.. do i need a switch case ???? 
 const questions = [
-    {
-        type: 'list',
-        message: 'What would you like to do? ',
-        name: 'question',
-        choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add a Department', 'Add a Role', 'Add an Employee', 'Update an Employee Role']
-      },
+{
+    type: 'list',
+    message: 'What would you like to do? ',
+    name: 'question',
+    choices: ['View All Departments', 'View All Roles', 'View All Employees', 'Add a Department', 'Add a Role', 'Add an Employee', 'Update an Employee Role']
+},
 // When I choose to add a department... 
 {
     type: 'list',
@@ -60,5 +61,5 @@ const questions = [
   },
 
   // When I choose to update an employee role... 
-  
+
 ]
