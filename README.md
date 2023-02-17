@@ -73,6 +73,6 @@ Thank you to my tutors Eric Sayer, Jehyun Jung and my study partner [Rebecca Law
 
 ## Questions 
 
-[GitHub Link](https://github.com/cassiewatsonn)
+[Cassandra Watson's GitHub Profile](https://github.com/cassiewatsonn)
 
 For any additional questions, please contact me by email at cassiewatsonn@gmail.com !
