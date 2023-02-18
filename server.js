@@ -1,23 +1,22 @@
-const express = require('express');
+// const express = require('express');
 const inquirer = require("inquirer");
 const mysql = require('mysql2');
 const console = require("console.table");
-
 //todo: link in db folder 
-// const db = require('./db');
+const db = require('./db');
 
+// Do I need this? 
+// const PORT = process.env.PORT || 3001;
+// const app = express();
 
-const PORT = process.env.PORT || 3001;
-const app = express();
-
-// MIDDLEWARE 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+// MIDDLEWARE // do i even need this? 
+// app.use(express.urlencoded({ extended: false }));
+// app.use(express.json());
 
 //todo: create connection to MySQL database ???? 
-// const connect = mysql.createConnection({
-
-// });
+const connect = mysql.createConnection({
+// 
+});
 
 // TODO step one: - [ ] WHEN I start the application THEN I am presented with the following options: 
 // TODO   view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
@@ -101,8 +100,8 @@ function addDept(){
       choices: ['Development', 'Finance', 'Sales', 'Service']
     })
     
-    .then(function(answer){
-      query.connect('SELECT * FROM department', 
+    .then(function(){
+      connect.query('SELECT * FROM department', 
       function (err, response){
         console(response);
         response.status(200).json(response)
@@ -181,17 +180,9 @@ function updateRole(){
     ])
 }
 
-// TODO: Create a function to initialize questions in terminal???
-// function init() {
-//   inquirer.prompt(firstQuestion)
-//   .then(response =>{
+// TODO: Call function to start questions in terminal
 
-//       let readSQL = db(response)
-//   }) 
-// }
-
-// Function call to initialize app
-// init();
+firstQuestion();
 
 
 
