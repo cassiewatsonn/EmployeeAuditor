@@ -3,7 +3,15 @@ const inquirer = require("inquirer");
 const mysql = require('mysql2');
 const console = require("console.table");
 //todo: link in db folder 
-const db = require('./db');
+const db = mysql.createConnection(
+  {
+      host: 'localhost',
+      user: 'root',
+      password: '',
+      database: 'employees_db'
+  },
+  console.log(`Connected to employees_db database.`)
+);
 
 // Do I need this? 
 // const PORT = process.env.PORT || 3001;
@@ -14,9 +22,9 @@ const db = require('./db');
 // app.use(express.json());
 
 //todo: create connection to MySQL database ???? 
-const connect = mysql.createConnection({
-// 
-});
+// const connect = mysql.createConnection({
+// // 
+// });
 
 // TODO step one: - [ ] WHEN I start the application THEN I am presented with the following options: 
 // TODO   view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
@@ -79,15 +87,27 @@ function firstQuestion(){
 //TODO: Use above ^ functions for next questions below 
 
 function viewDept(){
-
-}
+  db.query("SELECT * FROM department", function (err, results) {
+    console.table(results);
+    res.status(200).json(results);
+    firstQuestion();
+});
+};
 
 function viewRoles(){
-
+  db.query("SELECT * FROM roles", function (err, results) {
+    console.table(results);
+    res.status(200).json(results);
+    firstQuestion();
+});
 }
 
 function viewEmployees(){
-
+  db.query("SELECT employee.id, employee.first_name, employee.last_name, role.role_title, department.department_name AS Department, role.role_salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager  FROM employee  JOIN roles ON employee.role_id = role.id JOIN department ON role.department_id = department.id LEFT JOIN employee AS manager ON employee.manager_id = manager.id;", function (err, results) {
+    console.table(results);
+    res.status(200).json(results);
+    firstQuestion();
+});
 }
 
 function addDept(){
@@ -100,11 +120,11 @@ function addDept(){
       choices: ['Development', 'Finance', 'Sales', 'Service']
     })
     
-    .then(function(){
-      connect.query('SELECT * FROM department', 
-      function (err, response){
-        console(response);
-        response.status(200).json(response)
+    .then(function(reply){
+      const deptNew = reply;
+      db.query("INSERT INTO department ('name') VALUES ?", deptNew, function (err, res) {
+        console.log(`${deptNew} has been added to the database.`);
+        firstQuestion();
       })
     })
 
