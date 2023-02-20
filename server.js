@@ -12,6 +12,11 @@ const db = mysql.createConnection(
   },
   // console.log(`Connected to employees_db database.`)
 );
+db.connect(function(err){
+  if (err) throw err
+  firstQuestion();
+})
+
 
 // Do I need this? 
 // const PORT = process.env.PORT || 3001;
@@ -202,7 +207,7 @@ function updateRole(){
 
 // TODO: Call function to start questions in terminal
 
-firstQuestion();
+// firstQuestion();
 
 
 
