@@ -15,7 +15,6 @@ const db = mysql.createConnection(
   console.log(`Connected to employees_db database.`)
 );
 
-
 // WHEN I start the application THEN I am presented with the following options: 
 // view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 function firstQuestion(){
@@ -70,6 +69,7 @@ function firstQuestion(){
   })
 };
 // Using above ^ functions for next question functions below 
+
 
 // VIEW ALL DEPARTMENTS 
 function viewDept(){
