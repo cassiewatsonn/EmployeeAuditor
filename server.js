@@ -182,7 +182,7 @@ function addEmployee(){
         type: 'list',
         message: 'Who is the employees manager?',
         name: 'manager_id',
-        choices: [{name:'John Doe', value: 1}, {name:'Alyssa Evans', value: 3}, {name:'Dominick Ha;;', value: 5}, {name:'Cassidy Perry', value: 7}]
+        choices: [{name:'John Doe', value: 1}, {name:'Alyssa Evans', value: 3}, {name:'Dominick Hall', value: 5}, {name:'Cassidy Perry', value: 7}]
       },
     ]).then(function(reply){
       const newEmployee = {
