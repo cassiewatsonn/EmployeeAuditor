@@ -1,7 +1,7 @@
 // const express = require('express');
 const inquirer = require("inquirer");
 const mysql = require('mysql2');
-const console = require("console.table");
+require("console.table");
 //todo: link in db folder 
 const db = mysql.createConnection(
   {
@@ -10,15 +10,16 @@ const db = mysql.createConnection(
       password: '',
       database: 'employees_db'
   },
-  // console.log(`Connected to employees_db database.`)
+  console.log(`Connected to employees_db database.`)
 );
-db.connect(function(err){
-  if (err) throw err
-  firstQuestion();
-})
+
+// db.connect(function(err){
+//   if (err) throw err
+//   firstQuestion();
+// });
 
 
-// Do I need this? 
+// Do I need this?
 // const PORT = process.env.PORT || 3001;
 // const app = express();
 
@@ -54,10 +55,10 @@ function firstQuestion(){
        'Update an Employee Role'],
     })
   .then(function(response){
-    console.log("You selected: "+ response.option)
+    // console.log("You selected: "+ response.question)
 
     // Creating First Question as switch statement to create function for each questions for follow up questions
-    switch (response.option) {
+    switch (response.question) {
       case 'View All Departments':
           viewDept();
           break;
@@ -94,23 +95,21 @@ function firstQuestion(){
 function viewDept(){
   db.query("SELECT * FROM department", function (err, results) {
     console.table(results);
-    res.status(200).json(results);
     firstQuestion();
 });
 };
 
 function viewRoles(){
-  db.query("SELECT * FROM roles", function (err, results) {
+  db.query("SELECT * FROM role", function (err, results) {
     console.table(results);
-    res.status(200).json(results);
     firstQuestion();
 });
 }
 
 function viewEmployees(){
-  db.query("SELECT employee.id, employee.first_name, employee.last_name, role.role_title, department.department_name AS Department, role.role_salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager  FROM employee  JOIN roles ON employee.role_id = role.id JOIN department ON role.department_id = department.id LEFT JOIN employee AS manager ON employee.manager_id = manager.id;", function (err, results) {
+  db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS Department, role.salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager  FROM employee  JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id LEFT JOIN employee AS manager ON employee.manager_id = manager.id;", function (err, results) {
+    if(err) console.log(err);
     console.table(results);
-    res.status(200).json(results);
     firstQuestion();
 });
 }
@@ -119,15 +118,14 @@ function addDept(){
 
   inquirer
     .prompt({
-      type: 'list',
+      type: 'input',
       message: 'What is the name of the department?',
-      name: 'department-name',
-      choices: ['Development', 'Finance', 'Sales', 'Service']
+      name: 'department'
     })
     
     .then(function(reply){
-      const deptNew = reply;
-      db.query("INSERT INTO department ('name') VALUES ?", deptNew, function (err, res) {
+      const deptNew = reply.department;
+      db.query("INSERT INTO department (name) VALUES (?)", deptNew, function (err, res) {
         console.log(`${deptNew} has been added to the database.`);
         firstQuestion();
       })
@@ -137,25 +135,45 @@ function addDept(){
 }
 
 function addRole(){
-  inquirer
-    .prompt([
-      {
-        type: 'input',
-        message: 'What is the name of the role?',
-        name: 'role',
-      },
-      {
-        type: 'input',
-        message: 'What is the salary of the role?',
-        name: 'salary',
-      },
-      {
-        type: 'list',
-        message: 'What department does this role belong to?',
-        name: 'department-role',
-        choices: ['Development', 'Finance', 'Sales', 'Service']
-      },
-    ]).then 
+  db.query('SELECT * FROM department', function (err, res){
+    const departmentOptions = res.map(role => {
+      return (
+        {
+          name: role.name,
+          value: role.id
+        }
+      )
+    })
+    inquirer
+      .prompt([
+        {
+          type: 'input',
+          message: 'What is the name of the role?',
+          name: 'title',
+        },
+        {
+          type: 'input',
+          message: 'What is the salary of the role?',
+          name: 'salary',
+        },
+        {
+          type: 'list',
+          message: 'What department does this role belong to?',
+          name: 'department_id',
+          choices: departmentOptions
+        },
+      ]).then(function(reply){
+        const role = {
+          title:reply.title, 
+          salary: reply.salary, 
+          department_id: reply.department_id
+        }
+        db.query("INSERT INTO role SET ?", role, function (err, res) {
+          console.log(`${reply.title} has been added to the database.`);
+          firstQuestion();
+        });
+      })
+  })
 
 }
 
@@ -202,12 +220,12 @@ function updateRole(){
         message: "What do you want to update the role to?",
         name: "roleUpdate"
       }
-    ])
+    ]).then 
 }
 
 // TODO: Call function to start questions in terminal
 
-// firstQuestion();
+firstQuestion();
 
 
 
