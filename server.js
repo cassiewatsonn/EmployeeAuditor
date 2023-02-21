@@ -201,11 +201,11 @@ function updateRole(){
  db.query('SELECT * FROM employee', function(err, res) {
   // console.log(res);
   const employUpdate = res.map(employee => {
-    return (
-      {
-        first_name:employee.first_name, 
-        last_name:employee.last_name, 
-      })
+    return (employee.first_name + ' ' + employee.last_name);
+      // {
+      //   first_name:employee.first_name, 
+      //   last_name:employee.last_name, 
+      // })
   })
  
   db.query('SELECT * FROM role', function(err, res){
