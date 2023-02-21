@@ -1,23 +1,3 @@
--- INSERT INTO department (name)
--- VALUES ("Development"),
---        ("Finance"),
---        ("Service"),
---        ("Sales");
-
--- INSERT INTO role (title, salary, department_id)
--- VALUES ("Junior Developer", 50000, 1), 
---        ("Sales Person", 70000, 2), 
---        ('Senior Developer', 80000, 3), 
---        ('Accountant', 65000, 4), 
---        ('Service Person', 60000, 4);
-
--- INSERT INTO employee (first_name, last_name, role_id, manager_id)
--- VALUES ('Jakob', 'Wilson', 1, 2), 
---        ('Bob', 'Peterson', 1, 3), 
---        ('Sally', 'Doe', 3, 4), 
---        ('Jimmy', 'Hill', 4, NULL), 
---        ('Paula', 'Gibson', 5, NULL)
-
 use employees_db;
 
 INSERT INTO department
@@ -44,10 +24,10 @@ INSERT INTO employee
     (first_name, last_name, role_id, manager_id)
 VALUES
     ('John', 'Doe', 1, NULL),
-    ('Mike', 'Chan', 2, 1),
-    ('Ashley', 'Rodriguez', 3, NULL),
-    ('Kevin', 'Tupik', 4, 3),
-    ('Kunal', 'Singh', 5, NULL),
-    ('Malia', 'Brown', 6, 5),
-    ('Sarah', 'Lourd', 7, NULL),
-    ('Tom', 'Allen', 8, 7);
+    ('Mike', 'Henson', 2, 1),
+    ('Alyssa', 'Evans', 3, NULL),
+    ('Kevin', 'Mcguire', 4, 3),
+    ('Dominick', 'Hall', 5, NULL),
+    ('Jakob', 'Dillon', 6, 5),
+    ('Cassidy', 'Perry', 7, NULL),
+    ('Robert', 'Allen', 8, 7);
