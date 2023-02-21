@@ -68,7 +68,7 @@ N/A
 
 ## Credits 
 
-Thank you to my tutors Eric Sayer, Jehyun Jung and my study partner [Rebecca Lawrence!](https://github.com/rkml14)
+Thank you to my tutor Jehyun Jung, AskBCS staff, and my study partner [Rebecca Lawrence!](https://github.com/rkml14)
 
 
 ## Questions 

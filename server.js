@@ -182,6 +182,7 @@ function addEmployee(){
         choices: [{name:'Sales Lead', value:1}, {name:'Salesperson', value: 2}, {name:'Lead Engineer', value: 3}, {name:'Software Engineer', value: 4}, {name:'Account Manager', value:5}, {name:'Accountant', value: 6}, {name:'Legal Team Lead', value:7}, {name:'Lawyer', value:8}]
       },
       // need to fix below... manager is updating as wrong person when view all employees.... 
+      // i get an error when i provide null as the value for the manager
       {
         type: 'list',
         message: 'Who is the employees manager?',
