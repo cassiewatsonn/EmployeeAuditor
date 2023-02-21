@@ -77,6 +77,7 @@ function firstQuestion(){
 };
 // Using above ^ functions for next question functions below 
 
+// VIEW ALL DEPARTMENTS 
 function viewDept(){
   db.query("SELECT * FROM department", function (err, results) {
     console.table(results);
@@ -84,6 +85,7 @@ function viewDept(){
 })
 };
 
+// VIEW ALL ROLES
 function viewRoles(){
   db.query("SELECT role.id, role.title, department.name AS department, role.salary FROM role JOIN department ON role.id = department.id", function (err, results) {
     console.table(results);
@@ -91,6 +93,7 @@ function viewRoles(){
 })
 };
 
+// VIEW ALL EMPLOYEES
 function viewEmployees(){
   db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS Department, role.salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager  FROM employee  JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id LEFT JOIN employee AS manager ON employee.manager_id = manager.id;", function (err, results) {
     if(err) console.log(err);
@@ -99,8 +102,8 @@ function viewEmployees(){
 })
 };
 
+// ADD A DEPARTMENT
 function addDept(){
-
   inquirer
     .prompt({
       type: 'input',
@@ -116,6 +119,7 @@ function addDept(){
     })
   };
 
+  // ADD A ROLE
 function addRole(){
   db.query('SELECT * FROM department', function (err, res){
     const departmentOptions = res.map(role => {
@@ -158,6 +162,7 @@ function addRole(){
     })
   };
 
+  // ADD AN EMPLOYEE
 function addEmployee(){
   inquirer
     .prompt([
@@ -197,6 +202,7 @@ function addEmployee(){
   })
 };
 
+// UPDATE AN EMPLOYEE ROLE
 function updateRole(){
  db.query('SELECT * FROM employee', function(err, res) {
   // console.log(res);
@@ -208,12 +214,6 @@ function updateRole(){
         name: employee.first_name + ' ' + employee.last_name, 
         value:employee.first_name, 
       })
-    
-    // return (employee.first_name + ' ' + employee.last_name);
-      // {
-      //   first_name:employee.first_name, 
-      //   last_name:employee.last_name, 
-      // })
   })
  
   db.query('SELECT * FROM role', function(err, res){
@@ -224,12 +224,6 @@ function updateRole(){
           name: role.title,
           value: role.id,
         })
-      // return (
-      //   {
-      //     name: role.name,
-      //     value: role.title,
-      //   }
-      // )
     })
  
   inquirer
@@ -248,8 +242,6 @@ function updateRole(){
       }
     ])
     .then((response) => {
-      // let { employUpdate, roleUpdate } = response
-      // db.query("UPDATE employee SET role_id = ? WHERE first_name = ?",  [employUpdate, roleUpdate], function (err, res) {
         let { employee, role } = response;
         db.query("UPDATE employee SET role_id = ? WHERE first_name = ?",  [role, employee], function (err, res) {
           if (err) {
