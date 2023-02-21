@@ -181,13 +181,11 @@ function addEmployee(){
         name: 'role_id',
         choices: [{name:'Sales Lead', value:1}, {name:'Salesperson', value: 2}, {name:'Lead Engineer', value: 3}, {name:'Software Engineer', value: 4}, {name:'Account Manager', value:5}, {name:'Accountant', value: 6}, {name:'Legal Team Lead', value:7}, {name:'Lawyer', value:8}]
       },
-      // need to fix below... manager is updating as wrong person when view all employees.... 
-      // i get an error when i provide null as the value for the manager
       {
         type: 'list',
         message: 'Who is the employees manager?',
         name: 'manager_id',
-        choices: [{name:'John Doe', value: 1}, {name:'Ashley Rodriguez', value: 2}, {name:'Kunal Singh', value: 3}, {name:'Sarah Lourd', value: 4}]
+        choices: [{name:'John Doe', value: 1}, {name:'Ashley Rodriguez', value: 3}, {name:'Kunal Singh', value: 5}, {name:'Sarah Lourd', value: 7}]
       },
     ]).then(function(reply){
       const newEmployee = {
@@ -210,7 +208,7 @@ function updateRole(){
       {
         type: "input",
         message: "Which employee are you updating?",
-        name: "employ-update"
+        name: "employUpdate"
       },
     
       {
@@ -220,8 +218,8 @@ function updateRole(){
       }
     ])
     .then((response) => {
-      let { employeeName, newRole } = response
-      db.query("UPDATE employee SET role_id = ? WHERE first_name = ?",  [newRole, employeeName], function (err, results) {
+      let { employUpdate, roleUpdate } = response
+      db.query("UPDATE employee SET role_id = ? WHERE first_name = ?",  [employUpdate, roleUpdate], function (err, res) {
           if (err) {
               console.log(err)
               process.exit(1);
