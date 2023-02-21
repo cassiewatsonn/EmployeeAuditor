@@ -224,13 +224,14 @@ function updateRole(){
       {
         type: "list",
         message: "Which employee are you updating?",
-        name: "employUpdate", 
+        name: "employee", 
         choices: employUpdate
       },
       {
-        type: "input",
+        type: "list",
         message: "What do you want to update the role to?",
-        name: roleUpdate
+        name: 'role',
+        choices: roleUpdate
       }
     ])
     .then((response) => {
