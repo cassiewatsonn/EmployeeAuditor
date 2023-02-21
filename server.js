@@ -4,7 +4,7 @@ const inquirer = require("inquirer");
 const mysql = require('mysql2');
 require("console.table");
 
-//todo: link in db folder 
+//link in db folder 
 const db = mysql.createConnection(
   {
       host: 'localhost',
@@ -15,15 +15,9 @@ const db = mysql.createConnection(
   console.log(`Connected to employees_db database.`)
 );
 
-// db.connect(function(err){
-//   if (err) throw err
-//   firstQuestion();
-// });
-
 
 // WHEN I start the application THEN I am presented with the following options: 
 // view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
-
 function firstQuestion(){
 
   inquirer
