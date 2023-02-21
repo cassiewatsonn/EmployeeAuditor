@@ -163,7 +163,6 @@ function addRole(){
 }
 
 function addEmployee(){
-
   inquirer
     .prompt([
       {
@@ -179,23 +178,24 @@ function addEmployee(){
       {
         type: 'list',
         message: 'What is the employees role?',
-        name: 'role',
-        choices: ['Sales Lead', 'Salesperson', 'Lead Engineer', 'Software Engineer', 'Account Manager', 'Accountant', 'Legal Team Lead', 'Lawyer']
+        name: 'role_id',
+        choices: [{name:'Sales Lead', value:1}, {name:'Salesperson', value: 2}, {name:'Lead Engineer', value: 3}, {name:'Software Engineer', value: 4}, {name:'Account Manager', value:5}, {name:'Accountant', value: 6}, {name:'Legal Team Lead', value:7}, {name:'Lawyer', value:8}]
       },
+      // need to fix below... manager is updating as wrong person when view all employees.... 
       {
         type: 'list',
         message: 'Who is the employees manager?',
-        name: 'manager',
-        choices: ['John Doe', 'Ashley Rodriguez', 'Kunal Singh', 'Sarah Lourd']
+        name: 'manager_id',
+        choices: [{name:'John Doe', value: 1}, {name:'Ashley Rodriguez', value: 2}, {name:'Kunal Singh', value: 3}, {name:'Sarah Lourd', value: 4}]
       },
     ]).then(function(reply){
-      const newEmployee ={
+      const newEmployee = {
         first_name: reply.first_name, 
         last_name: reply.last_name,
-        role: reply.role, 
-        manager: reply.manager,  
+        role_id: reply.role_id, 
+        manager_id: reply.manager_id,  
       }
-    db.query('INSERT INTO employee SET ?', newEmployee, function (err, res){
+    db.query('INSERT INTO employee SET ?', newEmployee,  function (err, res){
       console.log(`${reply.first_name} has been added to the database.`);
       firstQuestion();
     });
@@ -217,8 +217,19 @@ function updateRole(){
         message: "What do you want to update the role to?",
         name: "roleUpdate"
       }
-    ]).then 
-}
+    ])
+    .then((response) => {
+      let { employeeName, newRole } = response
+      db.query("UPDATE employee SET role_id = ? WHERE first_name = ?",  [newRole, employeeName], function (err, results) {
+          if (err) {
+              console.log(err)
+              process.exit(1);
+          }
+          console.log('Employee has been updated')
+          firstQuestion();
+      })
+  })
+};
 
 // Call function to start questions in terminal
 
