@@ -207,18 +207,18 @@ function updateRole(){
         last_name:employee.last_name, 
       })
   })
- })
- db.query('SELECT * FROM role', function(err, res){
-  console.log(res);
-  const roleUpdate = res.map(role => {
-    return (
-      {
-        name: role.name,
-        value: role.id,
-      }
-    )
-  })
- })
+ 
+  db.query('SELECT * FROM role', function(err, res){
+    // console.log(res);
+    const roleUpdate = res.map(role => {
+      return (
+        {
+          name: role.name,
+          value: role.id,
+        }
+      )
+    })
+ 
   inquirer
     .prompt([
       {
@@ -244,7 +244,9 @@ function updateRole(){
           console.log('Employee updated!')
           firstQuestion();
       })
+    })
   })
+})
 };
 
 // Call function to start questions in terminal
