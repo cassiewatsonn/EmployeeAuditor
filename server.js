@@ -214,7 +214,7 @@ function updateRole(){
       return (
         {
           name: role.name,
-          value: role.id,
+          value: role.title,
         }
       )
     })
