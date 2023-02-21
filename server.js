@@ -2,6 +2,7 @@
 const inquirer = require("inquirer");
 const mysql = require('mysql2');
 require("console.table");
+
 //todo: link in db folder 
 const db = mysql.createConnection(
   {
@@ -19,24 +20,8 @@ const db = mysql.createConnection(
 // });
 
 
-// Do I need this?
-// const PORT = process.env.PORT || 3001;
-// const app = express();
-
-// MIDDLEWARE // do i even need this? 
-// app.use(express.urlencoded({ extended: false }));
-// app.use(express.json());
-
-//todo: create connection to MySQL database ???? 
-// const connect = mysql.createConnection({
-// // 
-// });
-
-// TODO step one: - [ ] WHEN I start the application THEN I am presented with the following options: 
-// TODO   view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
-// app.get('/departments', (req, res) => {
-//   // code to view all departments
-// });
+// WHEN I start the application THEN I am presented with the following options: 
+// view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role
 
 function firstQuestion(){
 
@@ -90,7 +75,7 @@ function firstQuestion(){
   })
 
 }
-//TODO: Use above ^ functions for next questions below 
+// Using above ^ functions for next question functions below 
 
 function viewDept(){
   db.query("SELECT * FROM department", function (err, results) {
@@ -178,32 +163,44 @@ function addRole(){
 }
 
 function addEmployee(){
-  
+
   inquirer
     .prompt([
       {
         type: 'input',
         message: 'What is the employees first name?',
-        name: 'firstname',
+        name: 'first_name',
       },
       {
         type: 'input',
         message: 'What is the employees last name?',
-        name: 'lastname',
+        name: 'last_name',
       },
       {
         type: 'list',
         message: 'What is the employees role?',
-        name: 'employee-role',
-        choices: ['Sales Person', 'Senior Developer', 'Junior Developer', 'Accountant', 'Service Person']
+        name: 'role',
+        choices: ['Sales Lead', 'Salesperson', 'Lead Engineer', 'Software Engineer', 'Account Manager', 'Accountant', 'Legal Team Lead', 'Lawyer']
       },
       {
         type: 'list',
         message: 'Who is the employees manager?',
         name: 'manager',
-        choices: ['', '', '', '', '']
+        choices: ['John Doe', 'Ashley Rodriguez', 'Kunal Singh', 'Sarah Lourd']
       },
-    ])
+    ]).then(function(reply){
+      const newEmployee ={
+        first_name: reply.first_name, 
+        last_name: reply.last_name,
+        role: reply.role, 
+        manager: reply.manager,  
+      }
+    db.query('INSERT INTO employee SET ?', newEmployee, function (err, res){
+      console.log(`${reply.first_name} has been added to the database.`);
+      firstQuestion();
+    });
+  })
+    
 }
 
 function updateRole(){
@@ -223,19 +220,8 @@ function updateRole(){
     ]).then 
 }
 
-// TODO: Call function to start questions in terminal
+// Call function to start questions in terminal
 
 firstQuestion();
 
 
-
-
-
-
-// app.use((req, res) => {
-//     res.status(404).end();
-//   });
-  
-//   app.listen(PORT, () => {
-//     console.log(`Server running on port ${PORT}`);
-//   });
