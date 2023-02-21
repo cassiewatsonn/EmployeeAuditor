@@ -1,4 +1,5 @@
 // const express = require('express');
+const { response } = require("express");
 const inquirer = require("inquirer");
 const mysql = require('mysql2');
 require("console.table");
@@ -197,17 +198,39 @@ function addEmployee(){
 };
 
 function updateRole(){
+ db.query('SELECT * FROM employee', function(err, res) {
+  // console.log(res);
+  const employUpdate = res.map(employee => {
+    return (
+      {
+        first_name:employee.first_name, 
+        last_name:employee.last_name, 
+      })
+  })
+ })
+ db.query('SELECT * FROM role', function(err, res){
+  console.log(res);
+  const roleUpdate = res.map(role => {
+    return (
+      {
+        name: role.name,
+        value: role.id,
+      }
+    )
+  })
+ })
   inquirer
     .prompt([
       {
-        type: "input",
+        type: "list",
         message: "Which employee are you updating?",
-        name: "employUpdate"
+        name: "employUpdate", 
+        choices: employUpdate
       },
       {
         type: "input",
         message: "What do you want to update the role to?",
-        name: "roleUpdate"
+        name: roleUpdate
       }
     ])
     .then((response) => {
@@ -217,7 +240,7 @@ function updateRole(){
               console.log(err)
               process.exit(1);
           }
-          console.log('Employee has been updated')
+          console.log('Employee updated!')
           firstQuestion();
       })
   })
