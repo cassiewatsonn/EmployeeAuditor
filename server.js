@@ -201,7 +201,15 @@ function updateRole(){
  db.query('SELECT * FROM employee', function(err, res) {
   // console.log(res);
   const employUpdate = res.map(employee => {
-    return (employee.first_name + ' ' + employee.last_name);
+    return (
+      {
+        // name is what will be displayed to the user in the questions
+        // value is what will be returned in the response
+        name: employee.first_name + ' ' + employee.last_name, 
+        value:employee.first_name, 
+      })
+    
+    // return (employee.first_name + ' ' + employee.last_name);
       // {
       //   first_name:employee.first_name, 
       //   last_name:employee.last_name, 
@@ -213,10 +221,15 @@ function updateRole(){
     const roleUpdate = res.map(role => {
       return (
         {
-          name: role.name,
-          value: role.title,
-        }
-      )
+          name: role.title,
+          value: role.id,
+        })
+      // return (
+      //   {
+      //     name: role.name,
+      //     value: role.title,
+      //   }
+      // )
     })
  
   inquirer
@@ -235,8 +248,10 @@ function updateRole(){
       }
     ])
     .then((response) => {
-      let { employUpdate, roleUpdate } = response
-      db.query("UPDATE employee SET role_id = ? WHERE first_name = ?",  [employUpdate, roleUpdate], function (err, res) {
+      // let { employUpdate, roleUpdate } = response
+      // db.query("UPDATE employee SET role_id = ? WHERE first_name = ?",  [employUpdate, roleUpdate], function (err, res) {
+        let { employee, role } = response;
+        db.query("UPDATE employee SET role_id = ? WHERE first_name = ?",  [role, employee], function (err, res) {
           if (err) {
               console.log(err)
               process.exit(1);
