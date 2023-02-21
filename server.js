@@ -73,31 +73,30 @@ function firstQuestion(){
           break;
   }
   })
-
-}
+};
 // Using above ^ functions for next question functions below 
 
 function viewDept(){
   db.query("SELECT * FROM department", function (err, results) {
     console.table(results);
     firstQuestion();
-});
+})
 };
 
 function viewRoles(){
   db.query("SELECT * FROM role", function (err, results) {
     console.table(results);
     firstQuestion();
-});
-}
+})
+};
 
 function viewEmployees(){
   db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS Department, role.salary, CONCAT(manager.first_name,' ', manager.last_name) AS manager  FROM employee  JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id LEFT JOIN employee AS manager ON employee.manager_id = manager.id;", function (err, results) {
     if(err) console.log(err);
     console.table(results);
     firstQuestion();
-});
-}
+})
+};
 
 function addDept(){
 
@@ -107,7 +106,6 @@ function addDept(){
       message: 'What is the name of the department?',
       name: 'department'
     })
-    
     .then(function(reply){
       const deptNew = reply.department;
       db.query("INSERT INTO department (name) VALUES (?)", deptNew, function (err, res) {
@@ -115,9 +113,7 @@ function addDept(){
         firstQuestion();
       })
     })
-
-
-}
+  };
 
 function addRole(){
   db.query('SELECT * FROM department', function (err, res){
@@ -158,9 +154,8 @@ function addRole(){
           firstQuestion();
         });
       })
-  })
-
-}
+    })
+  };
 
 function addEmployee(){
   inquirer
@@ -197,10 +192,9 @@ function addEmployee(){
     db.query('INSERT INTO employee SET ?', newEmployee,  function (err, res){
       console.log(`${reply.first_name} has been added to the database.`);
       firstQuestion();
-    });
+    })
   })
-    
-}
+};
 
 function updateRole(){
   inquirer
@@ -210,7 +204,6 @@ function updateRole(){
         message: "Which employee are you updating?",
         name: "employUpdate"
       },
-    
       {
         type: "input",
         message: "What do you want to update the role to?",
