@@ -82,7 +82,7 @@ function viewDept(){
 
 // VIEW ALL ROLES
 function viewRoles(){
-  db.query("SELECT role.id, role.title, department.name AS department, role.salary FROM role JOIN department ON role.id = department.id", function (err, results) {
+  db.query("SELECT role.id, role.title, role.salary, department.name FROM role LEFT JOIN department on role.department_id=department.id", function (err, results) {
     console.table(results);
     firstQuestion();
 })
